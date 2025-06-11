@@ -20,6 +20,18 @@ export interface CaseStudy {
   location: string;
   story: string;
   achievement: string;
+  profilePic: string;
+  contactInfo: {
+    email: string;
+    phone: string;
+    linkedin?: string;
+  };
+  journey: {
+    failures: string[];
+    turningPoint: string;
+    successStory: string;
+  };
+  quote: string;
 }
 
 export interface WorkforcePlan {
@@ -97,6 +109,38 @@ export interface AlgorithmInfo {
   accuracy: string;
 }
 
+export interface GuidanceInfo {
+  goalBased: {
+    primaryGoal: string;
+    shortTermObjectives: string[];
+    longTermVision: string;
+  };
+  financial: {
+    totalInvestmentNeeded: string;
+    monthlyBudget: string;
+    expectedROI: string;
+    riskLevel: 'low' | 'medium' | 'high';
+  };
+  moralSupport: {
+    motivationalMessage: string;
+    commonChallenges: string[];
+    successMindset: string[];
+  };
+  patience: {
+    timeToBreakEven: string;
+    difficultyLevel: string;
+    persistenceRequired: string;
+  };
+  lifeLessons: string[];
+}
+
+export interface DataSource {
+  name: string;
+  url: string;
+  description: string;
+  lastUpdated: string;
+}
+
 export interface Recommendation {
   name: string;
   id: string;
@@ -108,7 +152,8 @@ export interface Recommendation {
   financials: FinancialPlan;
   caseStudies: CaseStudy[];
   workforcePlan: WorkforcePlan;
-  dataSources: string[];
+  dataSources: DataSource[];
   mentors: Mentor[];
   algorithmInfo?: AlgorithmInfo;
+  guidance: GuidanceInfo;
 }

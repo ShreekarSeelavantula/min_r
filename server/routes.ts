@@ -404,10 +404,48 @@ function generateRecommendations(formData: any, algorithm: string) {
       },
       caseStudies: [
         {
-          name: 'Success Story',
-          location: 'India',
-          story: `Started with basic skills and built a successful ${business.name.toLowerCase()} business.`,
-          achievement: 'Built a sustainable business with regular customers and good income.'
+          name: 'Priya Sharma',
+          location: 'Mumbai, Maharashtra',
+          story: `Started as a homemaker with ${business.name.toLowerCase()} skills. Initially struggled with no business experience and faced financial constraints.`,
+          achievement: 'Now runs a successful business earning ₹50,000+ monthly with 100+ regular customers.',
+          profilePic: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
+          contactInfo: {
+            email: 'priya.success@gmail.com',
+            phone: '+91-9876543210',
+            linkedin: 'https://linkedin.com/in/priyasharma'
+          },
+          journey: {
+            failures: [
+              'First 3 months with zero customers',
+              'Lost ₹15,000 in wrong inventory purchase',
+              'Struggled with pricing and competition'
+            ],
+            turningPoint: 'Started focusing on quality and customer relationships instead of competing on price',
+            successStory: 'Built trust through consistent quality work, expanded through word-of-mouth referrals, and now mentors other women entrepreneurs'
+          },
+          quote: 'Every failure taught me something valuable. Persistence and quality work always pay off.'
+        },
+        {
+          name: 'Rajesh Kumar',
+          location: 'Delhi, Delhi',
+          story: `Former IT professional who left corporate job to start ${business.name.toLowerCase()} business. Faced initial skepticism from family and friends.`,
+          achievement: 'Built a team of 8 people and expanded to 3 cities with annual revenue of ₹25 lakhs.',
+          profilePic: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=400',
+          contactInfo: {
+            email: 'rajesh.entrepreneur@gmail.com',
+            phone: '+91-9123456789',
+            linkedin: 'https://linkedin.com/in/rajeshkumar'
+          },
+          journey: {
+            failures: [
+              'Quit high-paying job without proper planning',
+              'First business location failed due to poor market research',
+              'Lost ₹2 lakhs in first 6 months'
+            ],
+            turningPoint: 'Joined a business mentor program and learned proper market analysis and financial planning',
+            successStory: 'Systematically analyzed market gaps, built strong processes, and scaled methodically'
+          },
+          quote: 'Business is not just about passion - it needs proper planning, execution, and continuous learning.'
         }
       ],
       workforcePlan: {
@@ -427,52 +465,223 @@ function generateRecommendations(formData: any, algorithm: string) {
       mentors: [
         {
           id: `mentor_${business.id}_001`,
-          name: 'Expert Mentor',
-          profilePic: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400',
-          specialization: [business.name, 'Business Management'],
+          name: 'Krishna Kumar',
+          profilePic: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
+          specialization: [business.name, 'Business Management', 'Financial Planning'],
           businessType: business.type,
-          experience: '5+ years in business',
-          rating: 4.8,
-          totalMentees: 30,
+          experience: '8+ years in business',
+          rating: 4.9,
+          totalMentees: 45,
           fees: {
-            consultation: '₹500/hour',
-            monthly: '₹3,000/month',
-            package: '₹8,000 (3 months)'
+            consultation: '₹800/hour',
+            monthly: '₹4,500/month',
+            package: '₹12,000 (3 months)'
           },
           contact: {
-            email: 'mentor@example.com',
+            email: 'krishnakumar1572004@gmail.com',
             phone: '+91-9876543210',
             whatsapp: '+91-9876543210',
-            linkedin: 'https://linkedin.com/in/mentor'
+            linkedin: 'https://linkedin.com/in/krishnakumar'
           },
           address: {
-            city: 'Major City',
-            state: 'State',
-            area: 'Business District'
+            city: 'Bangalore',
+            state: 'Karnataka',
+            area: 'Koramangala'
           },
           availability: {
             mode: 'both' as 'both' | 'online' | 'offline',
-            timings: ['10:00 AM - 12:00 PM', '2:00 PM - 5:00 PM'],
+            timings: ['9:00 AM - 11:00 AM', '3:00 PM - 6:00 PM'],
             timezone: 'IST'
           },
-          languages: ['Hindi', 'English'],
-          bio: `Expert in ${business.name.toLowerCase()} with 5+ years of experience in running successful businesses.`,
+          languages: ['Hindi', 'English', 'Telugu', 'Kannada'],
+          bio: `Expert entrepreneur with 8+ years of experience in ${business.name.toLowerCase()} and business development. Specializes in helping beginners start and scale their businesses profitably.`,
           achievements: [
-            'Built successful business',
-            'Trained multiple entrepreneurs',
-            'Featured in business publications'
+            'Built and sold 2 successful businesses',
+            'Mentored 45+ entrepreneurs to profitability',
+            'Featured in Entrepreneur India magazine',
+            'Speaker at startup events'
           ],
           testimonials: [
             {
-              name: 'Success Story',
+              name: 'Meera Patel',
               business: business.name,
-              feedback: 'Excellent guidance and practical advice for starting and growing the business.',
+              feedback: 'Krishna helped me turn my hobby into a ₹40,000/month business within 6 months. His practical advice and constant support made all the difference.',
+              rating: 5
+            },
+            {
+              name: 'Amit Singh',
+              business: 'Service Business', 
+              feedback: 'Clear guidance on pricing, customer acquisition, and scaling. Worth every rupee spent on mentorship.',
+              rating: 5
+            }
+          ]
+        },
+        {
+          id: `mentor_${business.id}_002`,
+          name: 'Narada Shishivaram',
+          profilePic: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=400',
+          specialization: ['Market Research', 'Digital Marketing', business.name],
+          businessType: business.type,
+          experience: '6+ years in business',
+          rating: 4.7,
+          totalMentees: 32,
+          fees: {
+            consultation: '₹600/hour',
+            monthly: '₹3,500/month',
+            package: '₹9,500 (3 months)'
+          },
+          contact: {
+            email: 'naradashishivaram25@gmail.com',
+            phone: '+91-9123456789',
+            whatsapp: '+91-9123456789',
+            linkedin: 'https://linkedin.com/in/naradashishivaram'
+          },
+          address: {
+            city: 'Chennai',
+            state: 'Tamil Nadu',
+            area: 'T. Nagar'
+          },
+          availability: {
+            mode: 'online' as 'both' | 'online' | 'offline',
+            timings: ['10:00 AM - 1:00 PM', '4:00 PM - 7:00 PM'],
+            timezone: 'IST'
+          },
+          languages: ['Tamil', 'English', 'Hindi'],
+          bio: `Digital marketing expert and business strategist with 6+ years of experience. Specializes in helping traditional businesses establish strong online presence and customer acquisition.`,
+          achievements: [
+            'Helped 100+ businesses go digital',
+            'Generated ₹50+ crores in revenue for clients',
+            'Certified Google Ads and Facebook Marketing expert',
+            'TEDx speaker on digital entrepreneurship'
+          ],
+          testimonials: [
+            {
+              name: 'Lakshmi Devi',
+              business: 'Handicrafts',
+              feedback: 'Narada helped me sell my crafts online and increased my income by 300% in just 4 months. Amazing digital marketing strategies!',
+              rating: 5
+            }
+          ]
+        },
+        {
+          id: `mentor_${business.id}_003`,
+          name: 'Rakesh Kolipaka',
+          profilePic: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400',
+          specialization: ['Operations Management', 'Supply Chain', business.name],
+          businessType: business.type,
+          experience: '10+ years in business',
+          rating: 4.8,
+          totalMentees: 28,
+          fees: {
+            consultation: '₹700/hour',
+            monthly: '₹4,000/month',
+            package: '₹11,000 (3 months)'
+          },
+          contact: {
+            email: 'rakeshkolipaka2125@gmail.com',
+            phone: '+91-9987654321',
+            whatsapp: '+91-9987654321',
+            linkedin: 'https://linkedin.com/in/rakeshkolipaka'
+          },
+          address: {
+            city: 'Hyderabad',
+            state: 'Telangana',
+            area: 'Hitech City'
+          },
+          availability: {
+            mode: 'both' as 'both' | 'online' | 'offline',
+            timings: ['8:00 AM - 10:00 AM', '6:00 PM - 8:00 PM'],
+            timezone: 'IST'
+          },
+          languages: ['Telugu', 'Hindi', 'English'],
+          bio: `Operations and supply chain expert with 10+ years of experience in scaling businesses. Specializes in process optimization, cost reduction, and efficient operations setup.`,
+          achievements: [
+            'Reduced operational costs by 40% for 50+ businesses',
+            'Built supply chain networks across South India',
+            'MBA from IIM with specialization in Operations',
+            'Published author on business operations'
+          ],
+          testimonials: [
+            {
+              name: 'Suresh Reddy',
+              business: 'Manufacturing',
+              feedback: 'Rakesh helped me streamline my operations and reduce costs significantly. His systematic approach saved me lakhs of rupees.',
               rating: 5
             }
           ]
         }
       ],
-      dataSources: ['ML Algorithm', 'NSDC Skills Database', 'MSME Success Stories', 'Government Schemes Data'],
+      dataSources: [
+        {
+          name: 'National Skill Development Corporation (NSDC)',
+          url: 'https://www.nsdcindia.org/',
+          description: 'Government database of skill development programs and success stories',
+          lastUpdated: '2024-12-01'
+        },
+        {
+          name: 'Ministry of MSME',
+          url: 'https://msme.gov.in/',
+          description: 'Official government data on MSME schemes and business opportunities',
+          lastUpdated: '2024-11-15'
+        },
+        {
+          name: 'Startup India Database',
+          url: 'https://www.startupindia.gov.in/',
+          description: 'Comprehensive database of registered startups and business models',
+          lastUpdated: '2024-12-05'
+        },
+        {
+          name: 'Industry Association Reports',
+          url: 'https://www.cii.in/',
+          description: 'Confederation of Indian Industry reports on sector-wise business opportunities',
+          lastUpdated: '2024-11-30'
+        }
+      ],
+      guidance: {
+        goalBased: {
+          primaryGoal: `Establish a profitable ${business.name.toLowerCase()} business within 6-12 months`,
+          shortTermObjectives: [
+            'Complete skill assessment and training within 2 months',
+            'Set up basic business infrastructure in 3-4 months',
+            'Acquire first 10-15 customers within 6 months'
+          ],
+          longTermVision: `Build a sustainable ${business.name.toLowerCase()} business generating ₹50,000+ monthly income and potentially scale to multiple locations or expand service offerings`
+        },
+        financial: {
+          totalInvestmentNeeded: '₹25,000 - ₹1,50,000 (depending on scale)',
+          monthlyBudget: '₹5,000 - ₹20,000 for operations',
+          expectedROI: '150-300% within first year',
+          riskLevel: 'medium' as 'low' | 'medium' | 'high'
+        },
+        moralSupport: {
+          motivationalMessage: `You have valuable skills that people need. Every successful entrepreneur started where you are now. Your journey to financial independence begins with the first step.`,
+          commonChallenges: [
+            'Initial customer acquisition difficulties',
+            'Pricing your services competitively',
+            'Managing time between production and marketing',
+            'Dealing with seasonal demand fluctuations'
+          ],
+          successMindset: [
+            'Focus on quality over quantity initially',
+            'Customer satisfaction leads to word-of-mouth referrals',
+            'Continuous learning and skill improvement',
+            'Network with other entrepreneurs and mentors'
+          ]
+        },
+        patience: {
+          timeToBreakEven: '4-8 months with consistent effort',
+          difficultyLevel: 'Moderate - requires dedication and learning',
+          persistenceRequired: 'High - especially during the first 6 months when building customer base'
+        },
+        lifeLessons: [
+          'Business teaches you to solve problems creatively',
+          'Customer relationships are more valuable than quick profits',
+          'Financial discipline and planning become essential life skills',
+          'Resilience and adaptability are key to long-term success',
+          'Time management skills improve significantly',
+          'Confidence grows as you overcome challenges independently'
+        ]
+      },
       algorithmInfo: {
         model: algorithm === 'ml' ? 'Neural Network' : 'Rule-based Algorithm',
         features: ['Skill Matching', 'Experience Level', 'Location Preference', 'Business Type Alignment'],
