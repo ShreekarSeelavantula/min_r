@@ -240,7 +240,61 @@ function App() {
             ]
           }
         ],
-        dataSources: ['ML Algorithm', 'NSDC Skills Database', 'MSME Success Stories', 'Government Schemes Data'],
+        dataSources: [
+          {
+            name: 'National Skill Development Corporation (NSDC)',
+            url: 'https://www.nsdcindia.org/',
+            description: 'Government database of skill development programs',
+            lastUpdated: '2024-12-01'
+          },
+          {
+            name: 'Ministry of MSME',
+            url: 'https://msme.gov.in/',
+            description: 'Official government data on MSME schemes',
+            lastUpdated: '2024-11-15'
+          }
+        ],
+        guidance: {
+          goalBased: {
+            primaryGoal: `Establish a profitable ${business.name.toLowerCase()} business within 6-12 months`,
+            shortTermObjectives: [
+              'Complete skill assessment and training within 2 months',
+              'Set up basic business infrastructure in 3-4 months',
+              'Acquire first 10-15 customers within 6 months'
+            ],
+            longTermVision: `Build a sustainable ${business.name.toLowerCase()} business generating ₹50,000+ monthly income`
+          },
+          financial: {
+            totalInvestmentNeeded: '₹25,000 - ₹1,50,000',
+            monthlyBudget: '₹5,000 - ₹20,000',
+            expectedROI: '150-300% within first year',
+            riskLevel: 'medium' as 'medium'
+          },
+          moralSupport: {
+            motivationalMessage: 'You have valuable skills that people need. Every successful entrepreneur started where you are now.',
+            commonChallenges: [
+              'Initial customer acquisition difficulties',
+              'Pricing services competitively',
+              'Managing time between production and marketing'
+            ],
+            successMindset: [
+              'Focus on quality over quantity initially',
+              'Customer satisfaction leads to word-of-mouth referrals',
+              'Continuous learning and skill improvement'
+            ]
+          },
+          patience: {
+            timeToBreakEven: '4-8 months with consistent effort',
+            difficultyLevel: 'Moderate - requires dedication and learning',
+            persistenceRequired: 'High - especially during the first 6 months'
+          },
+          lifeLessons: [
+            'Business teaches you to solve problems creatively',
+            'Customer relationships are more valuable than quick profits',
+            'Financial discipline and planning become essential life skills',
+            'Resilience and adaptability are key to long-term success'
+          ]
+        },
         algorithmInfo: {
           model: 'Rule-based Fallback',
           features: ['Skill Matching', 'Experience Level', 'Location Preference', 'Business Type Alignment'],

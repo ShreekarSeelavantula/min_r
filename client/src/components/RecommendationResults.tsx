@@ -405,7 +405,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                               
                               {/* Failures */}
                               <div className="bg-red-50 rounded-lg p-3 mb-3 border border-red-200">
-                                <h7 className="font-medium text-red-800 mb-2 block">Initial Challenges:</h7>
+                                <div className="font-medium text-red-800 mb-2">Initial Challenges:</div>
                                 <ul className="space-y-1">
                                   {story.journey.failures.map((failure, failIdx) => (
                                     <li key={failIdx} className="text-sm text-red-700 flex items-start">
@@ -418,13 +418,13 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
 
                               {/* Turning Point */}
                               <div className="bg-blue-50 rounded-lg p-3 mb-3 border border-blue-200">
-                                <h7 className="font-medium text-blue-800 mb-2 block">Turning Point:</h7>
+                                <div className="font-medium text-blue-800 mb-2">Turning Point:</div>
                                 <p className="text-sm text-blue-700">{story.journey.turningPoint}</p>
                               </div>
 
                               {/* Success Story */}
                               <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-                                <h7 className="font-medium text-green-800 mb-2 block">Success Story:</h7>
+                                <div className="font-medium text-green-800 mb-2">Success Story:</div>
                                 <p className="text-sm text-green-700">{story.journey.successStory}</p>
                               </div>
                             </div>
@@ -631,7 +631,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                               </button>
                               {mentor.contact.whatsapp && (
                                 <button
-                                  onClick={() => handleContactClick('whatsapp', mentor.contact.whatsapp)}
+                                  onClick={() => handleContactClick('whatsapp', mentor.contact.whatsapp!)}
                                   className="flex items-center space-x-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                                 >
                                   <MessageCircle className="h-4 w-4" />
@@ -651,6 +651,154 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                         <p className="text-sm mt-2">Check back later or contact us for mentor recommendations.</p>
                       </div>
                     )}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'guidance' && (
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-6 flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                    Personalized Guidance for {recommendation.name}
+                  </h4>
+                  
+                  <div className="space-y-6">
+                    {/* Goal-Based Guidance */}
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+                      <h5 className="font-semibold text-blue-800 mb-4 flex items-center">
+                        <Target className="h-5 w-5 mr-2" />
+                        Your Business Goals & Roadmap
+                      </h5>
+                      <div className="space-y-4">
+                        <div>
+                          <h6 className="font-medium text-gray-800 mb-2">Primary Goal:</h6>
+                          <p className="text-gray-700 bg-white rounded-lg p-3 border border-blue-300">{recommendation.guidance.goalBased.primaryGoal}</p>
+                        </div>
+                        <div>
+                          <h6 className="font-medium text-gray-800 mb-2">Short-term Objectives (Next 6 months):</h6>
+                          <div className="space-y-2">
+                            {recommendation.guidance.goalBased.shortTermObjectives.map((objective, idx) => (
+                              <div key={idx} className="flex items-start space-x-2 bg-white rounded-lg p-3 border border-blue-300">
+                                <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                <span className="text-gray-700">{objective}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <h6 className="font-medium text-gray-800 mb-2">Long-term Vision:</h6>
+                          <p className="text-gray-700 bg-white rounded-lg p-3 border border-blue-300">{recommendation.guidance.goalBased.longTermVision}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Financial Guidance */}
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+                      <h5 className="font-semibold text-green-800 mb-4 flex items-center">
+                        <DollarSign className="h-5 w-5 mr-2" />
+                        Financial Planning & Investment
+                      </h5>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="bg-white rounded-lg p-4 border border-green-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Total Investment Needed:</h6>
+                          <p className="text-green-700 font-semibold">{recommendation.guidance.financial.totalInvestmentNeeded}</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border border-green-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Monthly Budget:</h6>
+                          <p className="text-green-700 font-semibold">{recommendation.guidance.financial.monthlyBudget}</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border border-green-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Expected ROI:</h6>
+                          <p className="text-green-700 font-semibold">{recommendation.guidance.financial.expectedROI}</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border border-green-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Risk Level:</h6>
+                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                            recommendation.guidance.financial.riskLevel === 'low' ? 'bg-green-100 text-green-800' :
+                            recommendation.guidance.financial.riskLevel === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                          }`}>
+                            {recommendation.guidance.financial.riskLevel.toUpperCase()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Moral Support & Mindset */}
+                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200">
+                      <h5 className="font-semibold text-purple-800 mb-4 flex items-center">
+                        <Award className="h-5 w-5 mr-2" />
+                        Moral Support & Success Mindset
+                      </h5>
+                      <div className="space-y-4">
+                        <div className="bg-white rounded-lg p-4 border border-purple-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Motivational Message:</h6>
+                          <p className="text-purple-700 italic leading-relaxed">{recommendation.guidance.moralSupport.motivationalMessage}</p>
+                        </div>
+                        <div>
+                          <h6 className="font-medium text-gray-800 mb-3">Common Challenges You'll Face:</h6>
+                          <div className="space-y-2">
+                            {recommendation.guidance.moralSupport.commonChallenges.map((challenge, idx) => (
+                              <div key={idx} className="flex items-start space-x-2 bg-orange-50 rounded-lg p-3 border border-orange-200">
+                                <span className="text-orange-500 mt-1">⚠️</span>
+                                <span className="text-gray-700">{challenge}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <h6 className="font-medium text-gray-800 mb-3">Success Mindset Tips:</h6>
+                          <div className="space-y-2">
+                            {recommendation.guidance.moralSupport.successMindset.map((tip, idx) => (
+                              <div key={idx} className="flex items-start space-x-2 bg-white rounded-lg p-3 border border-purple-300">
+                                <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                <span className="text-gray-700">{tip}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Patience & Persistence */}
+                    <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200">
+                      <h5 className="font-semibold text-orange-800 mb-4 flex items-center">
+                        <Clock className="h-5 w-5 mr-2" />
+                        Patience & Persistence Required
+                      </h5>
+                      <div className="grid md:grid-cols-3 gap-4">
+                        <div className="bg-white rounded-lg p-4 border border-orange-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Break-even Timeline:</h6>
+                          <p className="text-orange-700 font-semibold">{recommendation.guidance.patience.timeToBreakEven}</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border border-orange-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Difficulty Level:</h6>
+                          <p className="text-orange-700">{recommendation.guidance.patience.difficultyLevel}</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-4 border border-orange-300">
+                          <h6 className="font-medium text-gray-800 mb-2">Persistence Required:</h6>
+                          <p className="text-orange-700">{recommendation.guidance.patience.persistenceRequired}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Life Lessons */}
+                    <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border border-teal-200">
+                      <h5 className="font-semibold text-teal-800 mb-4 flex items-center">
+                        <BookOpen className="h-5 w-5 mr-2" />
+                        Life Lessons You'll Learn
+                      </h5>
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {recommendation.guidance.lifeLessons.map((lesson, idx) => (
+                          <div key={idx} className="flex items-start space-x-3 bg-white rounded-lg p-4 border border-teal-300">
+                            <div className="bg-teal-100 rounded-full p-2">
+                              <Award className="h-4 w-4 text-teal-600" />
+                            </div>
+                            <span className="text-gray-700 leading-relaxed">{lesson}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
