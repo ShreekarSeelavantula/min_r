@@ -64,17 +64,14 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  const host = "127.0.0.1";
-  server.listen(port, host, () => {
-    log(`serving on port ${port}`);
-  });
-
   // Fallback route for SPA
   app.get('*', (_req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
+  });
+
+  // Use PORT from environment variable (required by Render)
+  const port = process.env.PORT || 5000;
+  server.listen(port, () => {
+    log(`serving on port ${port}`);
   });
 })();
