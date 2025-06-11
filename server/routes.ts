@@ -205,7 +205,8 @@ function generateDynamicBusinesses(userSkills: string[], businessType: string): 
 
   // Generate businesses for each user skill
   userSkills.forEach(skill => {
-    const businessTemplate = skillToBusinessMap[skill];
+    const skillLower = skill.toLowerCase();
+    const businessTemplate = skillToBusinessMap[skillLower];
     if (businessTemplate && !usedBusinesses.has(businessTemplate.name)) {
       // Check if business type matches user preference
       if (businessType === 'both' || businessTemplate.type === businessType || businessTemplate.type === 'both') {
@@ -369,9 +370,9 @@ function generateRecommendations(formData: any, algorithm: string) {
     };
   });
 
-  // Filter businesses with meaningful skill matches (minimum 40% skill relevance)
+  // Filter businesses with meaningful skill matches (minimum 25% skill relevance)
   const relevantBusinesses = scoredBusinesses.filter(business => {
-    return business.skillScore >= 0.4; // Only show if at least 40% skill match
+    return business.skillScore >= 0.25; // Only show if at least 25% skill match
   });
 
   // Sort by score and return top matches (up to 3)
