@@ -11,7 +11,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
   recommendations, 
   onReset 
 }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'resources' | 'financials' | 'workforce' | 'stories' | 'mentors' | 'algorithm'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'resources' | 'financials' | 'workforce' | 'stories' | 'mentors' | 'guidance' | 'algorithm'>('overview');
 
   const handleContactClick = (type: string, value: string) => {
     switch (type) {
@@ -74,6 +74,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
             { key: 'algorithm', label: 'AI Insights', icon: Brain },
             { key: 'stories', label: 'Success Stories', icon: Award },
             { key: 'mentors', label: 'Expert Mentors', icon: User },
+            { key: 'guidance', label: 'Guidance', icon: CheckCircle },
             { key: 'resources', label: 'Learning', icon: BookOpen },
             { key: 'financials', label: 'Financial Plan', icon: DollarSign },
             { key: 'workforce', label: 'Team Planning', icon: Users }
@@ -179,15 +180,30 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
 
                   {/* Data Sources */}
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <h5 className="font-medium text-gray-800 mb-2">Data Sources & AI Transparency</h5>
-                    <div className="flex flex-wrap gap-2">
+                    <h5 className="font-medium text-gray-800 mb-3 flex items-center">
+                      <Globe className="h-4 w-4 mr-2" />
+                      Data Sources & AI Transparency
+                    </h5>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {recommendation.dataSources.map((source, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 border">
-                          {source}
-                        </span>
+                        <div key={idx} className="bg-white rounded-lg p-3 border border-gray-200">
+                          <div className="flex items-center justify-between mb-1">
+                            <h6 className="font-medium text-sm text-gray-800">{source.name}</h6>
+                            <a 
+                              href={source.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:text-blue-800"
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                          </div>
+                          <p className="text-xs text-gray-600 mb-1">{source.description}</p>
+                          <p className="text-xs text-gray-400">Updated: {source.lastUpdated}</p>
+                        </div>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-gray-500 mt-3">
                       * These AI-powered recommendations are guidance-based and not guaranteed results. Success depends on various factors including market conditions and execution.
                     </p>
                   </div>
@@ -333,28 +349,104 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                     <Award className="h-5 w-5 text-yellow-600 mr-2" />
                     Success Stories for {recommendation.name}
                   </h4>
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {recommendation.caseStudies.map((story, idx) => (
-                      <div key={idx} className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200">
-                        <div className="flex items-start space-x-4">
-                          <div className="bg-yellow-500 text-white rounded-full p-2">
-                            <Award className="h-5 w-5" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2 mb-2">
-                              <h5 className="font-semibold text-gray-800">{story.name}</h5>
-                              <div className="flex items-center text-sm text-gray-600">
+                      <div key={idx} className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 border border-yellow-200">
+                        <div className="flex flex-col md:flex-row gap-6">
+                          {/* Profile Picture and Basic Info */}
+                          <div className="flex flex-col items-center md:items-start space-y-3">
+                            <img 
+                              src={story.profilePic} 
+                              alt={story.name}
+                              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
+                            />
+                            <div className="text-center md:text-left">
+                              <h5 className="font-bold text-xl text-gray-800">{story.name}</h5>
+                              <div className="flex items-center text-sm text-gray-600 mt-1">
                                 <MapPin className="h-4 w-4 mr-1" />
                                 {story.location}
                               </div>
                             </div>
-                            <p className="text-gray-700 mb-3 leading-relaxed">{story.story}</p>
-                            <div className="bg-white rounded-lg p-3 border border-yellow-300">
-                              <div className="flex items-center space-x-2">
-                                <CheckCircle className="h-4 w-4 text-green-600" />
-                                <span className="font-medium text-green-800">Achievement:</span>
+                            
+                            {/* Contact Information */}
+                            <div className="bg-white rounded-lg p-3 border border-yellow-300 w-full">
+                              <h6 className="font-medium text-gray-800 mb-2 text-center md:text-left">Contact</h6>
+                              <div className="space-y-1 text-sm">
+                                <button
+                                  onClick={() => handleContactClick('email', story.contactInfo.email)}
+                                  className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 w-full justify-center md:justify-start"
+                                >
+                                  <Mail className="h-3 w-3" />
+                                  <span>{story.contactInfo.email}</span>
+                                </button>
+                                <div className="flex items-center space-x-2 text-gray-600 justify-center md:justify-start">
+                                  <Phone className="h-3 w-3" />
+                                  <span>{story.contactInfo.phone}</span>
+                                </div>
+                                {story.contactInfo.linkedin && (
+                                  <button
+                                    onClick={() => handleContactClick('linkedin', story.contactInfo.linkedin!)}
+                                    className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 w-full justify-center md:justify-start"
+                                  >
+                                    <Linkedin className="h-3 w-3" />
+                                    <span>LinkedIn</span>
+                                  </button>
+                                )}
                               </div>
-                              <p className="text-green-700 mt-1">{story.achievement}</p>
+                            </div>
+                          </div>
+
+                          {/* Story Content */}
+                          <div className="flex-1 space-y-4">
+                            {/* Journey from Failures to Success */}
+                            <div>
+                              <h6 className="font-semibold text-gray-800 mb-2">Journey from Struggles to Success</h6>
+                              <p className="text-gray-700 leading-relaxed mb-3">{story.story}</p>
+                              
+                              {/* Failures */}
+                              <div className="bg-red-50 rounded-lg p-3 mb-3 border border-red-200">
+                                <h7 className="font-medium text-red-800 mb-2 block">Initial Challenges:</h7>
+                                <ul className="space-y-1">
+                                  {story.journey.failures.map((failure, failIdx) => (
+                                    <li key={failIdx} className="text-sm text-red-700 flex items-start">
+                                      <span className="text-red-500 mr-2 text-xs">●</span>
+                                      {failure}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+
+                              {/* Turning Point */}
+                              <div className="bg-blue-50 rounded-lg p-3 mb-3 border border-blue-200">
+                                <h7 className="font-medium text-blue-800 mb-2 block">Turning Point:</h7>
+                                <p className="text-sm text-blue-700">{story.journey.turningPoint}</p>
+                              </div>
+
+                              {/* Success Story */}
+                              <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                                <h7 className="font-medium text-green-800 mb-2 block">Success Story:</h7>
+                                <p className="text-sm text-green-700">{story.journey.successStory}</p>
+                              </div>
+                            </div>
+
+                            {/* Achievement */}
+                            <div className="bg-white rounded-lg p-4 border border-yellow-300">
+                              <div className="flex items-center space-x-2 mb-2">
+                                <CheckCircle className="h-5 w-5 text-green-600" />
+                                <span className="font-semibold text-green-800">Current Achievement:</span>
+                              </div>
+                              <p className="text-green-700 font-medium">{story.achievement}</p>
+                            </div>
+
+                            {/* Inspirational Quote */}
+                            <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                              <div className="flex items-start space-x-3">
+                                <div className="text-purple-400 text-2xl">"</div>
+                                <div>
+                                  <p className="text-purple-800 italic font-medium leading-relaxed">{story.quote}</p>
+                                  <p className="text-purple-600 text-sm mt-2">- {story.name}</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -429,10 +521,10 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                                 <div className="space-y-2">
                                   <button
                                     onClick={() => handleContactClick('email', mentor.contact.email)}
-                                    className="flex items-center space-x-2 text-sm text-gray-600 hover:text-purple-600 transition-colors w-full text-left"
+                                    className="flex items-center space-x-2 text-sm text-gray-600 hover:text-purple-600 transition-colors w-full text-left bg-purple-50 p-2 rounded-md border border-purple-200 hover:bg-purple-100"
                                   >
                                     <Mail className="h-4 w-4" />
-                                    <span>{mentor.contact.email}</span>
+                                    <span>Send Email: {mentor.contact.email}</span>
                                   </button>
                                   <button
                                     onClick={() => handleContactClick('phone', mentor.contact.phone)}
@@ -443,7 +535,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                                   </button>
                                   {mentor.contact.whatsapp && (
                                     <button
-                                      onClick={() => handleContactClick('whatsapp', mentor.contact.whatsapp)}
+                                      onClick={() => handleContactClick('whatsapp', mentor.contact.whatsapp!)}
                                       className="flex items-center space-x-2 text-sm text-gray-600 hover:text-green-600 transition-colors w-full text-left"
                                     >
                                       <MessageCircle className="h-4 w-4" />
@@ -452,7 +544,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                                   )}
                                   {mentor.contact.linkedin && (
                                     <button
-                                      onClick={() => handleContactClick('linkedin', mentor.contact.linkedin)}
+                                      onClick={() => handleContactClick('linkedin', mentor.contact.linkedin!)}
                                       className="flex items-center space-x-2 text-sm text-gray-600 hover:text-blue-600 transition-colors w-full text-left"
                                     >
                                       <Linkedin className="h-4 w-4" />
