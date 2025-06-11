@@ -1,10 +1,18 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const distPath = path.join(__dirname, '../dist/public');
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Serve static files from the dist/public directory
+app.use(express.static(distPath));
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -63,5 +71,10 @@ app.use((req, res, next) => {
   const host = "127.0.0.1";
   server.listen(port, host, () => {
     log(`serving on port ${port}`);
+  });
+
+  // Fallback route for SPA
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
   });
 })();
