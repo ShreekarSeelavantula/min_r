@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, TrendingUp, DollarSign, Clock, ExternalLink, BookOpen, Target, Users, Star, Award, MapPin, Calendar, Briefcase, CheckCircle, Phone, Mail, MessageCircle, Linkedin, Globe, User, Brain, BarChart3, Cpu } from 'lucide-react';
+import { ArrowLeft, TrendingUp, DollarSign, Clock, ExternalLink, BookOpen, Target, Users, Star, Award, MapPin, Calendar, Briefcase, CheckCircle, Phone, Mail, MessageCircle, Linkedin, Globe, User, Brain, BarChart3, Cpu, X, Send } from 'lucide-react';
 import { Recommendation } from '../types';
 
 interface RecommendationResultsProps {
@@ -12,11 +12,24 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
   onReset 
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'resources' | 'financials' | 'workforce' | 'stories' | 'mentors' | 'guidance' | 'algorithm'>('overview');
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailData, setEmailData] = useState({
+    to: '',
+    subject: '',
+    body: ''
+  });
 
-  const handleContactClick = (type: string, value: string) => {
+  const handleContactClick = (type: string, value: string, context?: { name?: string, type?: string }) => {
     switch (type) {
       case 'email':
-        window.open(`mailto:${value}`, '_blank');
+        setEmailData({
+          to: value,
+          subject: context?.name ? `Inquiry about ${context.type || 'Business'} Guidance - ${context.name}` : 'Business Inquiry',
+          body: context?.name ? 
+            `Dear ${context.name},\n\nI hope this email finds you well. I am interested in learning more about your ${context.type || 'business'} guidance services.\n\nI came across your profile through our business recommendation platform and would like to discuss:\n\n• Consultation availability\n• Pricing and packages\n• Your experience in my area of interest\n\nI would appreciate the opportunity to schedule a call or meeting at your convenience.\n\nThank you for your time and consideration.\n\nBest regards,\n[Your Name]` 
+            : 'Hello,\n\nI would like to get in touch regarding business guidance.\n\nBest regards,\n[Your Name]'
+        });
+        setShowEmailModal(true);
         break;
       case 'phone':
         window.open(`tel:${value}`, '_blank');
@@ -30,6 +43,17 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
       default:
         break;
     }
+  };
+
+  const handleSendEmail = () => {
+    const mailtoLink = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
+    window.open(mailtoLink, '_blank');
+    setShowEmailModal(false);
+  };
+
+  const closeEmailModal = () => {
+    setShowEmailModal(false);
+    setEmailData({ to: '', subject: '', body: '' });
   };
 
   const renderStars = (rating: number) => {
@@ -373,7 +397,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                               <h6 className="font-medium text-gray-800 mb-2 text-center md:text-left">Contact</h6>
                               <div className="space-y-1 text-sm">
                                 <button
-                                  onClick={() => handleContactClick('email', story.contactInfo.email)}
+                                  onClick={() => handleContactClick('email', story.contactInfo.email, { name: story.name, type: 'Success Story Contact' })}
                                   className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 w-full justify-center md:justify-start"
                                 >
                                   <Mail className="h-3 w-3" />
@@ -520,7 +544,7 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                                 <h6 className="font-medium text-gray-800 mb-3">Contact Information</h6>
                                 <div className="space-y-2">
                                   <button
-                                    onClick={() => handleContactClick('email', mentor.contact.email)}
+                                    onClick={() => handleContactClick('email', mentor.contact.email, { name: mentor.name, type: 'Business Mentorship' })}
                                     className="flex items-center space-x-2 text-sm text-gray-600 hover:text-purple-600 transition-colors w-full text-left bg-purple-50 p-2 rounded-md border border-purple-200 hover:bg-purple-100"
                                   >
                                     <Mail className="h-4 w-4" />
@@ -1029,6 +1053,88 @@ const RecommendationResults: React.FC<RecommendationResultsProps> = ({
           Get New AI Recommendations
         </button>
       </div>
+
+      {/* Email Compose Modal */}
+      {showEmailModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-800 flex items-center">
+                <Mail className="h-5 w-5 mr-2 text-blue-600" />
+                Compose Email
+              </h3>
+              <button
+                onClick={closeEmailModal}
+                className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+              >
+                <X className="h-5 w-5 text-gray-600" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 space-y-4">
+              {/* To Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">To:</label>
+                <input
+                  type="email"
+                  value={emailData.to}
+                  onChange={(e) => setEmailData(prev => ({ ...prev, to: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  placeholder="recipient@example.com"
+                />
+              </div>
+
+              {/* Subject Field */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Subject:</label>
+                <input
+                  type="text"
+                  value={emailData.subject}
+                  onChange={(e) => setEmailData(prev => ({ ...prev, subject: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  placeholder="Enter subject line"
+                />
+              </div>
+
+              {/* Message Body */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Message:</label>
+                <textarea
+                  value={emailData.body}
+                  onChange={(e) => setEmailData(prev => ({ ...prev, body: e.target.value }))}
+                  rows={12}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+                  placeholder="Type your message here..."
+                />
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-between p-4 border-t border-gray-200 bg-gray-50">
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={handleSendEmail}
+                  className="flex items-center space-x-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                  <Send className="h-4 w-4" />
+                  <span>Send</span>
+                </button>
+                <button
+                  onClick={closeEmailModal}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+              <div className="text-xs text-gray-500">
+                This will open your default email client
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

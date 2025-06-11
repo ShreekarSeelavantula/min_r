@@ -172,10 +172,26 @@ function App() {
         },
         caseStudies: [
           {
-            name: 'Success Story',
-            location: 'India',
-            story: `Started with basic skills and built a successful ${business.name.toLowerCase()} business.`,
-            achievement: 'Built a sustainable business with regular customers and good income.'
+            name: 'Priya Sharma',
+            location: 'Mumbai, Maharashtra',
+            story: `Started as a homemaker with ${business.name.toLowerCase()} skills. Initially struggled with no business experience and faced financial constraints.`,
+            achievement: 'Now runs a successful business earning ₹50,000+ monthly with 100+ regular customers.',
+            profilePic: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
+            contactInfo: {
+              email: 'priya.success@gmail.com',
+              phone: '+91-9876543210',
+              linkedin: 'https://linkedin.com/in/priyasharma'
+            },
+            journey: {
+              failures: [
+                'First 3 months with zero customers',
+                'Lost ₹15,000 in wrong inventory purchase',
+                'Struggled with pricing and competition'
+              ],
+              turningPoint: 'Started focusing on quality and customer relationships instead of competing on price',
+              successStory: 'Built trust through consistent quality work, expanded through word-of-mouth referrals, and now mentors other women entrepreneurs'
+            },
+            quote: 'Every failure taught me something valuable. Persistence and quality work always pay off.'
           }
         ],
         workforcePlan: {
